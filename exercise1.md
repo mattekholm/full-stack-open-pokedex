@@ -4,6 +4,10 @@
 
 In my (limited) experience, .NET provides decent tooling out of the box, such as the Roslyn compiler, which handles linting. However, there are also other popular options, such as JetBrains ReSharper, SonarQube, and StyleCop Analyzers.
 
+Some popular unit testing frameworks for .Net would be MSTest, NUnit, xUnit.net, while suitable frameworks for higher abstraction levels, such as GUI testing, could be done in e.g. Playwright or Selenium.
+
+Suitable build tools would be the default MSBuild, but also tools such as Nuke or Cake could be used.
+
 ## Alternative CI tools besides Jenkins and GitHub Actions
 
 There are a number of alternatives, including Azure Pipelines, Bitbucket Pipelines, Bamboo, AWS CodePipeline, GitLab, CircleCI, TeamCity, and more.
