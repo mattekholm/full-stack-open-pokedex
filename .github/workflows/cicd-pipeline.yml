@@ -29,7 +29,7 @@ jobs:
     name: Playwright Tests
     runs-on: ubuntu-20.04
     needs: build_and_test
-    if: ${{ github.event_name == 'pull_request' }}
+    if: ${{ github.event_name == 'pull_request' && !contains(github.event.head_commit.message, '#skip-e2e') }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
