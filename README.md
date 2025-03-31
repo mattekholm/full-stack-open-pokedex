@@ -14,3 +14,7 @@ Start by running `npm install` inside the project folder
 `npm run build` to make a production build
 `npm run start-prod` to run your production build
 `npm run test:e2e`to run end-2-end (Playwright) tests
+
+## Other Juicy Details
+
+When merging a branch into `main`, you can skip the bumping the (patch) version and deployment by adding `#skip` to the **merge** commit message.
