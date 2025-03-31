@@ -72,7 +72,7 @@ jobs:
   deploy:
     name: Deploy to Fly.io
     runs-on: ubuntu-latest
-    needs: playwright_tests
+    needs: tag_releases
     concurrency: deploy-group
     if: ${{ github.event_name == 'push' }}
     steps:
