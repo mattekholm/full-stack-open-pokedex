@@ -18,3 +18,5 @@ Start by running `npm install` inside the project folder
 ## Other Juicy Details
 
 When merging a branch into `main`, you can skip the bumping the (patch) version and deployment by adding `#skip` to the **merge** commit message.
+
+Changes to `main` can only be done through approved PRs where all tests have passed!
