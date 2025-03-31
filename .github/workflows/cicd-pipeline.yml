@@ -11,6 +11,7 @@ jobs:
   build_and_test:
     name: Build, Lint, and Test
     runs-on: ubuntu-20.04
+    if: ${{ github.event_name == 'pull_request' }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -25,30 +26,11 @@ jobs:
       - name: Build
         run: npm run build
 
-  tag_releases:
-    name: Tag Releases
-    runs-on: ubuntu-20.04
-    permissions:
-      contents: write
-    needs: build_and_test
-    if: ${{ github.event_name == 'push' }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Bump version and push tag
-        uses: anothrNick/github-tag-action@1.71.0
-        env:
-          DEFAULT_BUMP: 'patch'
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DRY_RUN: false
-          
-
-
   playwright_tests:
     name: Playwright Tests
     runs-on: ubuntu-20.04
     needs: build_and_test
+    if: ${{ github.event_name == 'pull_request' }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -67,10 +49,29 @@ jobs:
           path: playwright-report/
           retention-days: 30
 
+  tag_releases:
+      name: Tag Releases
+      runs-on: ubuntu-20.04
+      permissions:
+        contents: write
+      needs: [build_and_test]
+      if: ${{ github.event_name == 'push' }}
+      steps:
+        - uses: actions/checkout@v4
+          with:
+            fetch-depth: 0
+        - name: Bump version and push tag
+          uses: anothrNick/github-tag-action@1.71.0
+          env:
+            DEFAULT_BUMP: 'patch'
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            DRY_RUN: false
+            
+
   deploy:
     name: Deploy to Fly.io
     runs-on: ubuntu-latest
-    needs: [build_and_test, tag_releases, playwright_tests]
+    needs: [build_and_test, tag_releases]
     concurrency: deploy-group
     if: ${{ github.event_name == 'push' }}
     steps:
