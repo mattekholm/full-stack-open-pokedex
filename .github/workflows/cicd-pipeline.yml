@@ -38,12 +38,10 @@ jobs:
           fetch-depth: 0
       - name: Bump version and push tag
         uses: anothrNick/github-tag-action@1.71.0
-        with:
-          default_bump: 'patch'
-          tag_prefix: 'v'
-          commit_message: 'chore(release): bump version to {{version}} [skip ci]'
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          dry_run: true
+        env:
+          DEFAULT_BUMP: 'patch'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DRY_RUN: true
           
 
 
