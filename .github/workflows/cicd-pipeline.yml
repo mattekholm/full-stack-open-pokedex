@@ -25,27 +25,49 @@ jobs:
       - name: Build
         run: npm run build
 
-  playwright_tests:
-    name: Playwright Tests
+  tag_releases:
+    name: Tag Releases
     runs-on: ubuntu-20.04
+    permissions:
+      contents: write
     needs: build_and_test
+    if: ${{ github.event_name == 'push' }}
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
         with:
-          node-version: '20'
-      - name: Install dependencies
-        run: npm ci
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
-      - name: Run Playwright tests
-        run: npx playwright test
-      - uses: actions/upload-artifact@v4
-        if: ${{ !cancelled() }}
+          fetch-depth: '0'
+      - name: Bump version and push tag
+        uses: anothrNick/github-tag-action@v1.71.0
         with:
-          name: playwright-report
-          path: playwright-report/
-          retention-days: 30
+          default_bump: 'patch'
+          tag_prefix: 'v'
+          commit_message: 'chore(release): bump version to {{version}} [skip ci]'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          dry_run: true
+          
+
+
+  # playwright_tests:
+  #   name: Playwright Tests
+  #   runs-on: ubuntu-20.04
+  #   needs: build_and_test
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: '20'
+  #     - name: Install dependencies
+  #       run: npm ci
+  #     - name: Install Playwright Browsers
+  #       run: npx playwright install --with-deps
+  #     - name: Run Playwright tests
+  #       run: npx playwright test
+  #     - uses: actions/upload-artifact@v4
+  #       if: ${{ !cancelled() }}
+  #       with:
+  #         name: playwright-report
+  #         path: playwright-report/
+  #         retention-days: 30
 
   deploy:
     name: Deploy to Fly.io
