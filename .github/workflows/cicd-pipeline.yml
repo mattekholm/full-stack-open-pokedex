@@ -79,3 +79,15 @@ jobs:
       - run: flyctl deploy --remote-only
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+      - name: Notify Success
+        if: ${{ success() }}
+        run: echo "Deployment to Fly.io was successful!"
+                
+  notify_failure:
+    name: Notify Failure
+    runs-on: ubuntu-latest
+    if: ${{ failure() }}
+    needs: [build_and_test, tag_releases, deploy]
+    steps:
+      - name: Notify Failure
+        run: "echo 'Pipeline failed. Check the commit here: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/commit/$GITHUB_SHA'"
