@@ -88,14 +88,14 @@ jobs:
   notify_failure:
     name: Notify Failure
     runs-on: ubuntu-latest
-    if: ${{ failure() }}
+    if: failure()
     needs: [build_and_test, tag_releases, deploy]
     steps:
       - name: Send Discord Notification
         uses: sarisia/actions-status-discord@v1
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          status: 'Failed'
+          status: ${{ job.status }}
           # color: 0xFFA500
           title: 'Build failed!'
-          # url: "Commit URL: ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}"
+          url: "${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}"
