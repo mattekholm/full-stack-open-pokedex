@@ -90,4 +90,4 @@ jobs:
     needs: [build_and_test, tag_releases, deploy]
     steps:
       - name: Notify Failure
-        run: "echo 'Pipeline failed. Check the commit here: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/commit/$GITHUB_SHA'"
+        run: echo "Pipeline failed. Check the commit here: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA}"
