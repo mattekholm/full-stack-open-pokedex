@@ -96,6 +96,6 @@ jobs:
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           status: ${{ job.status }}
-          color: 0xFFA500
+          # color: 0xFFA500
           title: 'Build failed!'
-          url: "Commit URL: ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}"
+          # url: "Commit URL: ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}"
