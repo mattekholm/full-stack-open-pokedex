@@ -94,5 +94,5 @@ jobs:
         with:
           severity: error
           text: Build failed
-          description: "Commit: ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}"
+          details: 'Commit: ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}'
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK_URL }}
