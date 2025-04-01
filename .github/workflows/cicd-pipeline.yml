@@ -89,5 +89,10 @@ jobs:
     if: ${{ failure() }}
     needs: [build_and_test, tag_releases, deploy]
     steps:
-      - name: Notify Failure
-        run: 'echo "Pipeline failed. Check the commit here: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA}"'
+      - name: Send Discord Notification
+        uses: rjstone/discord-webhook-notify@v1.0.4
+        with:
+          severity: error
+          text: Build failed
+          description: "Commit: ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}"
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK_URL }}
