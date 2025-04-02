@@ -98,5 +98,5 @@ jobs:
           nodetail: true
           color: 0xFFA500
           title: 'Build failed!'
-          # status: ${{ job.status }}
+          status: ${{ job.status }}
           url: "${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}"
