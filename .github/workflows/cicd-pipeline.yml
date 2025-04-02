@@ -95,6 +95,7 @@ jobs:
         uses: sarisia/actions-status-discord@v1
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          nodetail: true
           color: 0xFFA500
           title: 'Build failed!'
           # status: ${{ job.status }}
