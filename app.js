@@ -18,6 +18,4 @@ app.get('/health', (req, res) => {
 app.listen(PORT, () => {
   // eslint-disable-next-line no-console
   console.log(`server started on port ${PORT}`)
-  
-  log('simulated error'
 })

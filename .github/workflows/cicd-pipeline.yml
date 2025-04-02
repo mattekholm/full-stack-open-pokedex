@@ -99,5 +99,4 @@ jobs:
           color: 0xFFA500
           title: 'Build failed!'
           description: "commit: ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}"
-          status: Failure
           url: "${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}"
